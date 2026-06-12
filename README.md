@@ -4,7 +4,7 @@ An interactive automation project designed to teach analog signal reading and ha
 
 This project is fully optimized for cross-platform workflows. No complex vendor IDEs or OS-specific setups are required. Open it directly in our IDE, plug in your board, and flash instantly.
 
-![servo](doc/images/Servo.png)
+![servo](doc/images/Servo_Potentiometer_100k.png)
 
 ---
 
