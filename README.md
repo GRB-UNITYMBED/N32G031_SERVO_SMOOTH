@@ -2,6 +2,8 @@
 
 An introductory project designed to teach servo motor control using the **N32G031** microcontroller, with a specific focus on achieving seamless, jerk-free movement (Smooth Sweep). This project serves as an excellent foundational learning tool for robotics and `for` loop applications tailored for kids and beginners.
 
+![servo](doc/images/Servo.png)
+
 ---
 
 ## 🎯 Learning Points
