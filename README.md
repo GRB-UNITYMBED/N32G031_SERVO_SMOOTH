@@ -1,8 +1,8 @@
-# N32G031_SERVO_SMOOTH 🤖✨
-
-An introductory project designed to teach servo motor control using the **N32G031** microcontroller, with a specific focus on achieving seamless, jerk-free movement (Smooth Sweep). This project serves as an excellent foundational learning tool for robotics and `for` loop applications tailored for kids and beginners.
+# N32G031_SERVO_SMOOTH 
 
 ![servo](doc/images/Servo.png)
+
+An introductory project designed to teach servo motor control using the **N32G031** microcontroller, with a specific focus on achieving seamless, jerk-free movement (Smooth Sweep). This project serves as an excellent foundational learning tool for robotics and `for` loop applications tailored for kids and beginners.
 
 ---
 
@@ -13,15 +13,15 @@ An introductory project designed to teach servo motor control using the **N32G03
 
 ---
 
-## 🔌 Wiring Diagram
+## Wiring
 
 The connections between the N32G031 board and the servo motor (e.g., SG90 model) are as follows:
 
 | Servo Signal Wire | N32G031 Pin | Description |
 | :--- | :---: | :--- |
-| 🟤 **Brown / Black (GND)** | **GND** | Common System Ground |
-| 🔴 **Red (VCC)** | **5V** | Motor Power Supply |
-| 🟠 **Orange / Yellow (Signal)** | **PA1** | Control Signal Pin (PWM Bit-Banging) |
+| 🤎 **Brown / Black (GND)** | **GND** | Common System Ground |
+| ❤️ **Red (VCC)** | **5V** | Motor Power Supply |
+| 🧡 **Orange / Yellow (Signal)** | **PA1** | Control Signal Pin (PWM Bit-Banging) |
 
 ---
 
@@ -50,4 +50,5 @@ Once powered on, the robotic arm will smoothly sweep through the following loop 
   * What happens if they change it to `+= 5`? Does it create a dramatic slow-motion effect?
 
 ---
-Developed by **GRB-UNITYMBED** to deliver highly accessible, engaging, and comprehensive coding and robotics educational materials for everyone. 🚀
+
+Part of the [UnityMbed](https://github.com/GRB-UNITYMBED) N32G031 example set.
