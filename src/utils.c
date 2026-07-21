@@ -1,6 +1,4 @@
 #include "n32g031.h"
-#include "n32g031.h"
-#include "core_cm0.h"
 
 void USART1_SendString(const char* str) {
     while (*str) {
