@@ -8,7 +8,7 @@ SIZE    = arm-none-eabi-size
 ######################################
 # Project Files
 ######################################
-TARGET = My_Project
+TARGET = N32G031_SERVO_SMOOTH
 OUTDIR = build
 
 # Source Files
