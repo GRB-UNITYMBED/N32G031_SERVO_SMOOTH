@@ -19,10 +19,10 @@ An introductory project designed to teach servo motor control using the **N32G03
 ## Behaviour & Execution
 
 Once powered on, the robotic arm will smoothly sweep through the following loop continuously:
-1. Smoothly sweep from **0 ➡️ 90 Degrees** 🌟 Hold position for 2 seconds.
-2. Smoothly sweep from **90 ➡️ 180 Degrees** 🌟 Hold position for 2 seconds.
-3. Smoothly sweep back from **180 ➡️ 90 Degrees** 🌟 Hold position for 2 seconds.
-4. Smoothly sweep back from **90 ➡️ 0 Degrees** 🌟 Hold position for 2 seconds, then restart the cycle.
+1. Smoothly sweep arm from 0 ➡️ 45 Degrees 🌟 Hold position. 
+2. Smoothly sweep arm from 45 ➡️ 90 Degrees 🌟 Hold position.
+3. Smoothly sweep arm back from 90 ➡️ 45 Degrees 🌟 Hold position.
+4. Smoothly sweep arm back from 45 ➡️ 0 Degrees to restart cycle 🌟 Hold position.
 
 ---
 
@@ -31,8 +31,8 @@ Once powered on, the robotic arm will smoothly sweep through the following loop 
 **Hardware Constants & Calibration**
 Since every servo motor has minor manufacturing variances, the pulse width constants for this specific setup have been calibrated as follows:
 * **0 Degrees (Far Left):** `2250`
-* **90 Degrees (Center / Straight Up):** `4400`
-* **180 Degrees (Far Right):** `5500`
+* **45 Degrees (Mid-Left):** `3325`
+* **90 Degrees (Perpendicular / Center)):** `4400`
 
 > **Important Note for Learners:** Avoid pushing these numbers past the motor's physical constraints (Mechanical Limit). Doing so can cause the motor to stall, draw excessive current, and lead to microcontroller freezes or crashes.
 
