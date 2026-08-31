@@ -1,22 +1,23 @@
+// UnityMbed — Smooth Servo Sweep Control @ N32G031
 #include "n32g031.h"
 #include "n32g031_gpio.h"
 #include "n32g031_rcc.h"
 
 /* ====================================================================
- * ⚙️ [โซนจูนฮาร์ดแวร์] 
- * ค่าจุดองศาต่างๆ ที่เราหามาอย่างยากลำบาก!
+ * [Hardware Calibration Zone]
+ * Pulse width parameters for calibrated angular positions
  * ==================================================================== */
-#define PULSE_0_DEG     2250   // 0 องศา (หันซ้ายสุด)
-#define PULSE_90_DEG    4400   // 90 องศา (ชี้ขึ้นฟ้าตั้งฉาก)
-#define PULSE_180_DEG   5500   // 180 องศา (หันขวาสุด)
+#define PULSE_0_DEG     2250   // 0 degrees (Far Left)
+#define PULSE_45_DEG    3325   // 45 degrees (Mid-Left)
+#define PULSE_90_DEG    4400   // 90 degrees (Perpendicular / Center)
 
-/* ฟังก์ชันหน่วงเวลา */
+/* Simple software delay loop */
 void Delay_Loop(volatile uint32_t count) {
     while(count--) { __NOP(); }
 }
 
 /* ====================================================================
- * 🧩 ฟังก์ชันย่อย: "ขยับทีละก้าว" (ส่งสัญญาณแค่ 1 รอบคลื่น)
+ * Sub-routine: Single-step pulse delivery (PWM bit-banging)
  * ==================================================================== */
 void Servo_Step(uint32_t pulse_width) {
     GPIO_SetBits(GPIOA, GPIO_PIN_1);     
@@ -26,16 +27,16 @@ void Servo_Step(uint32_t pulse_width) {
 }
 
 /* ====================================================================
- * 🪄 ฟังก์ชันเวทมนตร์: "ขยับแบบสมูทจากมุมหนึ่งไปอีกมุมหนึ่ง"
+ * Core Motion Routine: Smooth sweep transition between pulse angles
  * ==================================================================== */
 void Smooth_Move(uint32_t start_pulse, uint32_t end_pulse) {
-    // ถ้าจุดหมายอยู่ไกลกว่า (ต้องหมุนไปทางขวา) ให้ค่อยๆ บวกเลขขึ้น
+    // If target angle is greater, increment pulse width smoothly
     if (start_pulse < end_pulse) {
         for (uint32_t p = start_pulse; p <= end_pulse; p += 20) {
             Servo_Step(p);
         }
     } 
-    // ถ้าจุดหมายอยู่น้อยกว่า (ต้องหมุนไปทางซ้าย) ให้ค่อยๆ ลบเล็กลง
+    // If target angle is lower, decrement pulse width smoothly
     else {
         for (uint32_t p = start_pulse; p >= end_pulse; p -= 20) {
             Servo_Step(p);
@@ -44,10 +45,10 @@ void Smooth_Move(uint32_t start_pulse, uint32_t end_pulse) {
 }
 
 /* ====================================================================
- * 🚀 [โซนฝึกเขียนโค้ด] ภารกิจ: "หันกวาด ซ้าย-กลาง-ขวา แบบนุ่มนวล"
+ * Main Entry Point: Periodic Smooth Sweep Loop
  * ==================================================================== */
 int main(void) {
-    /* เตรียมความพร้อมฮาร์ดแวร์ */
+    /* Initialize GPIOA Peripheral Clock and Pin 1 as Push-Pull Output */
     RCC_EnableAPB2PeriphClk(RCC_APB2_PERIPH_GPIOA, ENABLE);
     GPIO_InitType GPIO_InitStructure;
     GPIO_InitStruct(&GPIO_InitStructure);
@@ -56,22 +57,20 @@ int main(void) {
     GPIO_InitPeripheral(GPIOA, &GPIO_InitStructure);
 
     while(1) {
+        /* 1. Smoothly sweep arm from 0 to 45 degrees */
+        Smooth_Move(PULSE_0_DEG, PULSE_45_DEG);
+        Delay_Loop(5000000); // Hold position
         
-        /* 1. ค่อย ๆ กวาดแขนจาก 0 ไป 90 องศา */
-        Smooth_Move(PULSE_0_DEG, PULSE_90_DEG);
-        Delay_Loop(8000000); // พักโชว์ท่า 2 วินาที
-        
-        /* 2. ค่อย ๆ กวาดแขนจาก 90 ไป 180 องศา */
-        Smooth_Move(PULSE_90_DEG, PULSE_180_DEG);
-        Delay_Loop(8000000); // พักโชว์ท่า 2 วินาที
+        /* 2. Smoothly sweep arm from 45 to 90 degrees */
+        Smooth_Move(PULSE_45_DEG, PULSE_90_DEG);
+        Delay_Loop(5000000); 
 
-        /* 3. ค่อย ๆ กวาดแขนกลับจาก 180 มาที่ 90 องศา */
-        Smooth_Move(PULSE_180_DEG, PULSE_90_DEG);
-        Delay_Loop(8000000); // พักโชว์ท่า 2 วินาที
+        /* 3. Smoothly sweep arm back from 90 to 45 degrees */
+        Smooth_Move(PULSE_90_DEG, PULSE_45_DEG);
+        Delay_Loop(5000000); 
 
-        /* 4. ค่อย ๆ กวาดแขนกลับจาก 90 มาที่ 0 องศา เพื่อเตรียมเริ่มรอบใหม่ */
-        Smooth_Move(PULSE_90_DEG, PULSE_0_DEG);
-        Delay_Loop(8000000); // พักโชว์ท่า 2 วินาที
-
+        /* 4. Smoothly sweep arm back from 45 to 0 degrees to restart cycle */
+        Smooth_Move(PULSE_45_DEG, PULSE_0_DEG);
+        Delay_Loop(5000000); 
     }
 }
