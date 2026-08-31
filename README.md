@@ -41,7 +41,7 @@ Since every servo motor has minor manufacturing variances, the pulse width const
 ## Learning & AI Extension Ideas
 
 * **Smooth Movement:** Understand the difference between making a robot "teleport" instantly versus "taking incremental steps" using the `Smooth_Move` function to create life-like, fluid animations.
-* **Hardware Calibration:** Gain hands-on experience tuning real hardware parameters (Pulse Width) to accurately calibrate 0, 90, and 180-degree angles.
+* **Hardware Calibration:** Gain hands-on experience tuning real hardware parameters (Pulse Width) to accurately calibrate 0, 10, 30, 60, and 90-degree angles.
 * **For Loop Application:** Visualize how a `for` loop works by watching the robot's arm move sequentially as numerical values increment or decrement.
 * **The Speed Challenge:** Encourage students to modify the step increments inside the `Smooth_Move` function (specifically the `p += 20` and `p -= 20` lines).
   * What happens if they change it to `+= 50`? Does the robot turn faster?
